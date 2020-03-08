@@ -20,7 +20,10 @@ const ELEMENT_CHECK_INTERVAL = 1000;
 const SCROLL_SPEED = 500;
 const SCROLL_OFFSET = 500;
 const MAX_SCROLL_LIMIT = 20;
-const CONTAINER = Symbol('$_CustomMenu_container');
+const DIRECTION = {
+    UP: -1,
+    DOWN: 1
+}
 
 export default Vue.extend({
     props: {
@@ -35,14 +38,14 @@ export default Vue.extend({
     },
     data(){
         return {
-            [CONTAINER]: document,
+            $_CustomMenu_container: document,
             sortStrategy: cookies.get('sectionsSortStrategy') || 'cat_new_to_old',
             sections: []
         };
     },
     async created(){
         try{
-            this[CONTAINER] = await findElement({
+            this.$_CustomMenu_container = await findElement({
                 selector: this.container
             })
         }catch(error){}
@@ -64,14 +67,15 @@ export default Vue.extend({
         }
     },
     methods: {
-        scrollTo(title: string, direction: number = 1){
+        scrollTo(title: string){
             let count = 1;
+            const direction = this.checkDirection(title);
             const scrollToElement = async () => {
                 const [ element ] = (
-                    [...(this[CONTAINER] as Element)
+                    [...(this.$_CustomMenu_container as Element)
                     .querySelectorAll('.list-section > h1 > span')]
                     .filter((element) => {
-                        return element.textContent.indexOf(title) !== -1;
+                        return element.textContent === title;
                     })
                 );
 
@@ -127,6 +131,33 @@ export default Vue.extend({
 
             this.sections = sections;
             console.log(sections);
+        },
+        checkDirection(title){
+            const index = this.sortedSections.findIndex(({ title:_title }) => {
+                return _title === title;
+            });
+            const headers = (this.$_CustomMenu_container as Element).querySelectorAll('.list-section > h1 > span');
+            let first;
+
+            for(let element of headers){
+                if(element.getBoundingClientRect().y >= 0){
+                    first = element;
+                    break;
+                }
+            }
+
+            if(first){
+                const targetTitle = first.textContent;
+                const targetIndex = this.sortedSections.findIndex(({ title:_title }) => {
+                    return _title === targetTitle;
+                });
+
+                if(index <= targetIndex){
+                    return DIRECTION.UP;
+                }
+            }
+
+            return DIRECTION.DOWN;
         }
     }
 });
