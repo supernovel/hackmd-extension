@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "dist/",
+        "target": "es6",
+        "module": "es2015",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": false,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "typeRoots": ["node_modules/web-ext-types"],
+        "lib": ["esnext.array", "esnext", "es2017", "dom", "dom.iterable"]
+    },
+    "include": ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "lib/**/*.ts", "typings/**/*.ts"],
+    "exclude": ["node_modules"]
+}
