@@ -1,8 +1,8 @@
 {
     "name": "hackmd-extension",
     "extensionName": "hackmd-extension",
-    "version": "0.1.0",
-    "description": "My Posh Extension",
+    "version": "0.2.0",
+    "description": "Hackmd.io Extension",
     "main": "src/manifast.json",
     "watchPort": "8091",
     "scripts": {
