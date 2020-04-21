@@ -1,6 +1,6 @@
 ## hackmd-extension
 
-- Drawer를 통해 네비게이션 메뉴 제공.
+-   Drawer를 통해 네비게이션 메뉴 제공.
 
 ## Build
 
@@ -17,4 +17,5 @@
 -   Work.
 
 ## If watcher reload not work, try changing the port.
-- [package.json => watchPort](./package.json)
+
+-   [package.json => watchPort](./package.json)

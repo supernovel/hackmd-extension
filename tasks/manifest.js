@@ -9,7 +9,7 @@ import manifestJson from '../src/manifest.json';
 
 const BASE_PATH = process.cwd();
 
-gulp.task('manifest',  async () => {
+gulp.task('manifest', async () => {
     let manifest = JSON.parse(
         template(JSON.stringify(manifestJson), packageJson)
     );
@@ -24,5 +24,5 @@ gulp.task('manifest',  async () => {
     return fs.writeFile(
         path.resolve(BASE_PATH, `dist/${args.vendor}/manifest.json`),
         JSON.stringify(manifest, null, args.production ? 0 : 4)
-    )
+    );
 });

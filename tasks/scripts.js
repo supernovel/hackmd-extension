@@ -18,12 +18,9 @@ gulp.task('scripts', async function scripts() {
         mode: ENV,
         context: path.resolve(BASE_PATH, 'src/'),
         entry: {
-            'background': [
-                'src/background/background.ts',
-                'lib/reload.ts'
-            ],
-            'content': 'src/content/content.ts',
-            'navigator': 'src/navigator/index.ts'
+            background: ['src/background/background.ts', 'lib/reload.ts'],
+            content: 'src/content/content.ts',
+            navigator: 'src/navigator/index.ts'
         },
         output: {
             chunkFilename: '[name].js',

@@ -12,17 +12,17 @@ Vue.use(VueRx);
     const contentView = document.querySelector('.row.ui-content');
     const container = document.createElement('div');
     const vm = new Vue({
-        data(){
+        data() {
             return {
                 team: (TEAM_PATH_REGEXP.exec(location.pathname) || [])[1] || ''
             };
         },
         methods: {
-            changeTeam(team){
+            changeTeam(team) {
                 this.team = team;
             }
         },
-        render(createElement){
+        render(createElement) {
             return createElement(Drawer, {}, [
                 createElement(Navigator, {
                     props: {
@@ -30,18 +30,17 @@ Vue.use(VueRx);
                     },
                     on: {
                         'change.team': this.changeTeam
-                    },   
-                })]
-            );
+                    }
+                })
+            ]);
         }
     });
 
-    if(mainView != null){
+    if (mainView != null) {
         mainView.after(container);
         vm.$mount(container);
-    }else if(contentView != null){
+    } else if (contentView != null) {
         contentView.after(container);
         vm.$mount(container);
     }
 })();
-

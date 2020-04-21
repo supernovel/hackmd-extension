@@ -2,21 +2,14 @@
     "manifest_version": 2,
     "name": "{{extensionName}}",
     "version": "{{version}}",
-    "description": "{{description}}", 
+    "description": "{{description}}",
     "homepage_url": "{{homepage}}",
     "icons": {
         "48": "images/icon_48.png",
         "128": "images/icon_128.png"
     },
-    "permissions": [
-        "activeTab", 
-        "tabs", 
-        "storage",
-        "*://*.hackmd.io/*"
-    ],
-    "web_accessible_resources": [
-        "scripts/*.js"
-    ],   
+    "permissions": ["activeTab", "tabs", "storage", "*://*.hackmd.io/*"],
+    "web_accessible_resources": ["scripts/*.js"],
     "background": {
         "persistent": true,
         "scripts": ["scripts/background.js"]

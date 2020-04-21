@@ -4,13 +4,7 @@ import VueLoaderPlugin from 'vue-loader/lib/plugin';
 
 const config = {
     output: {
-        filename: (chunkData) => {
-            if(process.env.NODE_ENV === 'production'){
-                return '[chunkhash].js';
-            }else{
-                return '[name].js';
-            }
-        }
+        filename: '[name].js'
     },
     module: {
         rules: [
@@ -34,18 +28,10 @@ const config = {
                 oneOf: [
                     {
                         resourceQuery: /^\?vue/,
-                        use: [
-                            'vue-style-loader',
-                            'css-loader',
-                            'sass-loader'
-                        ]
+                        use: ['vue-style-loader', 'css-loader', 'sass-loader']
                     },
                     {
-                        use: [
-                            'style-loader',
-                            'css-loader',
-                            'sass-loader'
-                        ]
+                        use: ['style-loader', 'css-loader', 'sass-loader']
                     }
                 ]
             },
@@ -67,13 +53,9 @@ const config = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.vue', '.vuex'],
-        plugins: [
-            new TsconfigPathsPlugin()
-        ]
+        plugins: [new TsconfigPathsPlugin()]
     },
-    plugins: [
-        new VueLoaderPlugin(),
-    ],
+    plugins: [new VueLoaderPlugin()],
     optimization: {
         minimizer: [
             new TerserPlugin({
@@ -81,11 +63,11 @@ const config = {
                 cache: true,
                 parallel: true,
                 terserOptions: {
-                  // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-                   extractComments: 'all',
-                   compress: {
-                       drop_console: true,
-                   }
+                    // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+                    extractComments: 'all',
+                    compress: {
+                        drop_console: true
+                    }
                 }
             })
         ]

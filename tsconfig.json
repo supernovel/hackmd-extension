@@ -16,6 +16,12 @@
         "typeRoots": ["node_modules/web-ext-types"],
         "lib": ["esnext.array", "esnext", "es2017", "dom", "dom.iterable"]
     },
-    "include": ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "lib/**/*.ts", "typings/**/*.ts"],
+    "include": [
+        "src/**/*.vue",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "lib/**/*.ts",
+        "typings/**/*.ts"
+    ],
     "exclude": ["node_modules"]
 }

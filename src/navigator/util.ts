@@ -1,11 +1,11 @@
 interface FindElementOptions {
-    selector: string
-    container?: Element
-    interval?: number
-    limit?: number
+    selector: string;
+    container?: Element;
+    interval?: number;
+    limit?: number;
 }
 
-export function findElement(options: FindElementOptions): Promise<Element>{
+export function findElement(options: FindElementOptions): Promise<Element> {
     return new Promise((resolve, reject) => {
         let count = 1;
         const limit = options.limit || 10;
@@ -14,20 +14,22 @@ export function findElement(options: FindElementOptions): Promise<Element>{
         const findElementUsingTimer = () => {
             const finded = container.querySelector(options.selector);
 
-            if(finded){
+            if (finded) {
                 resolve(finded);
-            }else if(count > limit){
+            } else if (count > limit) {
                 reject(Error('Not found.'));
-            }else{
+            } else {
                 count++;
-                setTimeout(findElementUsingTimer, interval)
+                setTimeout(findElementUsingTimer, interval);
             }
-        }
+        };
         findElementUsingTimer();
     });
 }
 
-export function findElements(options: FindElementOptions): Promise<Array<Element>>{
+export function findElements(
+    options: FindElementOptions
+): Promise<Array<Element>> {
     return new Promise((resolve, reject) => {
         let count = 1;
         const limit = options.limit || 10;
@@ -36,15 +38,15 @@ export function findElements(options: FindElementOptions): Promise<Array<Element
         const findElementsUsingTimer = () => {
             const finded = container.querySelectorAll(options.selector);
 
-            if(finded && finded.length){
+            if (finded && finded.length) {
                 resolve([...finded]);
-            }else if(count > limit){
+            } else if (count > limit) {
                 reject(Error('Not found.'));
-            }else{
+            } else {
                 count++;
-                setTimeout(findElementsUsingTimer, interval)
+                setTimeout(findElementsUsingTimer, interval);
             }
-        }
+        };
         findElementsUsingTimer();
     });
 }

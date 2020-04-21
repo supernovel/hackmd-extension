@@ -12,12 +12,14 @@ import { name as packageName } from '../../package.json';
         console.debug(`connected ${title}.`);
 
         port.onMessage.addListener((message, port) => {
-            switch(message) {
+            switch (message) {
                 case 'runContentScript':
                     browser.tabs.executeScript({
                         code: `
                             var script = document.createElement("script");
-                            script.src = "${browser.extension.getURL('scripts/navigator.js')}";
+                            script.src = "${browser.extension.getURL(
+                                'scripts/navigator.js'
+                            )}";
                             document.body.appendChild(script);
                         `
                     });
