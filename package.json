@@ -6,8 +6,8 @@
     "main": "src/manifast.json",
     "watchPort": "8091",
     "scripts": {
-        "lint:check": "prettier --check \"**/*.{ts,tsx,js,json,md,html}\"",
-        "lint:fix": "prettier --write \"**/*.{ts,tsx,js,json,md,html}\"",
+        "prettier:check": "prettier --check \"**/*.{ts,tsx,js,json,md,html}\"",
+        "prettier:fix": "prettier --write \"**/*.{ts,tsx,js,json,md,html}\"",
         "clean:chrome": "gulp clean --vendor chrome",
         "build:chrome": "gulp --vendor chrome --production",
         "build:chrome:dev": "gulp --vendor chrome",
