@@ -12,11 +12,19 @@ import { name as packageName } from '../../package.json';
         console.debug(`connected ${title}.`);
 
         port.onMessage.addListener((message, port) => {
-            console.debug(`received message from ${title}: ${message.text} `);
+            switch(message) {
+                case 'runContentScript':
+                    browser.tabs.executeScript({
+                        code: `
+                            var script = document.createElement("script");
+                            script.src = "${browser.extension.getURL('scripts/navigator.js')}";
+                            document.body.appendChild(script);
+                        `
                     });
+                    break;
+            }
 
-        port.postMessage({
-            text: 'hello content scripts.'
+            console.debug(`received message from ${title}: ${message} `);
         });
     });
 })();

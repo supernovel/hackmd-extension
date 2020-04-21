@@ -87,6 +87,7 @@
         "rxjs": "^6.5.4",
         "scroll-into-view-if-needed": "^2.2.24",
         "socket.io": "^2.3.0",
+        "v-click-outside": "^3.0.1",
         "vue": "^2.6.11",
         "vue-rx": "^6.2.0",
         "webextension-polyfill-ts": "^0.11.0"
