@@ -88,11 +88,7 @@ const config = {
                    }
                 }
             })
-        ],
-        splitChunks: {
-            chunks: 'all',
-            automaticNameDelimiter: '-' // use '~' => load error.
-        }
+        ]
     }
 };
 

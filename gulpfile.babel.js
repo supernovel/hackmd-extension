@@ -13,7 +13,7 @@ gulp.task('clean', () => {
 
 gulp.task(
     'build',
-    gulp.series('clean', gulp.parallel('images', 'locales', 'scripts'), 'pack')
+    gulp.series('clean', gulp.parallel('images', 'manifest', 'scripts'), 'pack')
 );
 
 gulp.task(

@@ -1,30 +1,32 @@
-import { promises as fs } from 'fs';
 import path from 'path';
 import gulp from 'gulp';
 import log from 'fancy-log';
 import colors from 'ansi-colors';
 import webpack from 'webpack';
-import { get, merge } from 'lodash';
+import { merge } from 'lodash';
 
 import args from './lib/args';
-import template from './lib/template';
-import preparingScripts from './prepare';
 import webpackConfig from '../webpack.config';
 
 const ENV = args.production ? 'production' : 'development';
 const BASE_PATH = process.cwd();
 
 gulp.task('scripts', async function scripts() {
-    let { manifest, entry, popupHtml, optionsHtml } = await preparingScripts();
-
     // Make webpack config
     const config = merge(webpackConfig, {
         devtool: args.sourcemaps ? 'inline-source-map' : false,
         mode: ENV,
         context: path.resolve(BASE_PATH, 'src/'),
-        entry: entry,
+        entry: {
+            'background': [
+                'src/background/background.ts',
+                'lib/reload.ts'
+            ],
+            'content': 'src/content/content.ts',
+            'navigator': 'src/navigator/index.ts'
+        },
         output: {
-            chunkFilename: args.production ? '[chunkhash].js' : '[name].js',
+            chunkFilename: '[name].js',
             path: path.resolve(BASE_PATH, `dist/${args.vendor}/scripts`)
         }
     });
@@ -42,7 +44,7 @@ gulp.task('scripts', async function scripts() {
     );
 
     // Bundling
-    const entryPoints = await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         webpack(config, async (err, stats) => {
             if (err || stats.hasErrors()) {
                 reject(err || stats);
@@ -65,58 +67,4 @@ gulp.task('scripts', async function scripts() {
             }
         });
     });
-
-    // Insert assets data into the (manifest.json, popup.html, options.html)
-    if (entryPoints) {
-        const entryKeys = Object.keys(entryPoints);
-        const manifestData = {};
-
-        entryKeys.forEach(key => {
-            const assets = get(entryPoints, [key, 'assets']);
-
-            if (key == 'popup' && popupHtml) {
-                popupHtml = template(popupHtml, {
-                    popup: assets.map(makeScriptTag).join('')
-                });
-            } else if (key == 'options' && optionsHtml) {
-                optionsHtml = template(optionsHtml, {
-                    options: assets.map(makeScriptTag).join('')
-                });
-            } else {
-                manifestData[key] = assets.map(makeScriptString).join('","');
-            }
-        });
-
-        manifest = template(manifest, manifestData);
-    }
-
-    // Write File (manifest.json, popup.html, options.html)
-    return Promise.all([
-        manifest
-            ? fs.writeFile(
-                  path.resolve(BASE_PATH, `dist/${args.vendor}/manifest.json`),
-                  manifest
-              )
-            : Promise.resolve(),
-        popupHtml
-            ? fs.writeFile(
-                  path.resolve(BASE_PATH, `dist/${args.vendor}/popup.html`),
-                  popupHtml
-              )
-            : Promise.resolve(),
-        optionsHtml
-            ? fs.writeFile(
-                  path.resolve(BASE_PATH, `dist/${args.vendor}/options.html`),
-                  optionsHtml
-              )
-            : Promise.resolve()
-    ]);
 });
-
-function makeScriptTag(src) {
-    return `<script src="scripts/${src}"></script>`;
-}
-
-function makeScriptString(src) {
-    return `scripts/${src}`;
-}

@@ -13,7 +13,7 @@ import { name as packageName } from '../../package.json';
 
         port.onMessage.addListener((message, port) => {
             console.debug(`received message from ${title}: ${message.text} `);
-        });
+                    });
 
         port.postMessage({
             text: 'hello content scripts.'
