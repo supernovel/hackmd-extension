@@ -1,5 +1,5 @@
-export function get(key) {
-    var value =
+export function get(key: string) {
+    let value =
         decodeURIComponent(
             document.cookie.replace(
                 new RegExp(

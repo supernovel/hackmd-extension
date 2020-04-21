@@ -23,6 +23,7 @@ export function findElement(options: FindElementOptions): Promise<Element> {
                 setTimeout(findElementUsingTimer, interval);
             }
         };
+
         findElementUsingTimer();
     });
 }
@@ -47,6 +48,7 @@ export function findElements(
                 setTimeout(findElementsUsingTimer, interval);
             }
         };
+
         findElementsUsingTimer();
     });
 }

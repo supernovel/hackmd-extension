@@ -1,5 +1,5 @@
 export default {
-    cat_old_to_new: (a, b) => {
+    cat_old_to_new(a, b) {
         const aTitle = a.title.toLowerCase();
         const bTitle = b.title.toLowerCase();
 
@@ -16,7 +16,7 @@ export default {
             return 0;
         }
     },
-    cat_new_to_old: (a, b) => {
+    cat_new_to_old(a, b) {
         const aTitle = a.title.toLowerCase();
         const bTitle = b.title.toLowerCase();
 
@@ -33,7 +33,7 @@ export default {
             return 0;
         }
     },
-    cat_a_to_z: (a, b) => {
+    cat_a_to_z(a, b) {
         const aTitle = a.title.toLowerCase();
         const bTitle = b.title.toLowerCase();
 
@@ -49,7 +49,7 @@ export default {
             return 0;
         }
     },
-    cat_z_to_a: (a, b) => {
+    cat_z_to_a(a, b) {
         const aTitle = a.title.toLowerCase();
         const bTitle = b.title.toLowerCase();
 
