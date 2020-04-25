@@ -6,8 +6,8 @@
     "main": "src/manifast.json",
     "watchPort": "8091",
     "scripts": {
-        "prettier:check": "prettier --check \"**/*.{ts,tsx,js,json,md,html}\"",
-        "prettier:fix": "prettier --write \"**/*.{ts,tsx,js,json,md,html}\"",
+        "prettier:check": "prettier --check \"**/*.{ts,tsx,js,json,md,html,vue}\"",
+        "prettier:fix": "prettier --write \"**/*.{ts,tsx,js,json,md,html,vue}\"",
         "clean:chrome": "gulp clean --vendor chrome",
         "build:chrome": "gulp --vendor chrome --production",
         "build:chrome:dev": "gulp --vendor chrome",
@@ -78,6 +78,7 @@
         "socket.io": "^2.3.0",
         "v-click-outside": "^3.0.1",
         "vue": "^2.6.11",
+        "vue-icon": "^2.1.2",
         "vue-rx": "^6.2.0",
         "webextension-polyfill-ts": "^0.11.0"
     }

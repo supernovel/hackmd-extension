@@ -1,11 +1,11 @@
 export default {
     cat_old_to_new(a, b) {
-        const aTitle = a.title.toLowerCase();
-        const bTitle = b.title.toLowerCase();
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
 
-        if (aTitle === 'pinned') {
+        if (aName === 'pinned') {
             return -1;
-        } else if (bTitle === 'pinned') {
+        } else if (bName === 'pinned') {
             return 1;
         }
         if (a.lastchangeAt > b.lastchangeAt) {
@@ -17,12 +17,12 @@ export default {
         }
     },
     cat_new_to_old(a, b) {
-        const aTitle = a.title.toLowerCase();
-        const bTitle = b.title.toLowerCase();
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
 
-        if (aTitle === 'pinned') {
+        if (aName === 'pinned') {
             return -1;
-        } else if (bTitle === 'pinned') {
+        } else if (bName === 'pinned') {
             return 1;
         }
         if (a.lastchangeAt > b.lastchangeAt) {
@@ -34,32 +34,32 @@ export default {
         }
     },
     cat_a_to_z(a, b) {
-        const aTitle = a.title.toLowerCase();
-        const bTitle = b.title.toLowerCase();
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
 
-        if (aTitle === 'pinned') {
+        if (aName === 'pinned') {
             return -1;
-        } else if (bTitle === 'pinned') {
+        } else if (bName === 'pinned') {
             return 1;
-        } else if (aTitle > bTitle) {
+        } else if (aName > bName) {
             return 1;
-        } else if (aTitle < bTitle) {
+        } else if (aName < bName) {
             return -1;
         } else {
             return 0;
         }
     },
     cat_z_to_a(a, b) {
-        const aTitle = a.title.toLowerCase();
-        const bTitle = b.title.toLowerCase();
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
 
-        if (aTitle === 'pinned') {
+        if (aName === 'pinned') {
             return -1;
-        } else if (bTitle === 'pinned') {
+        } else if (bName === 'pinned') {
             return 1;
-        } else if (aTitle > bTitle) {
+        } else if (aName > bName) {
             return -1;
-        } else if (aTitle < bTitle) {
+        } else if (aName < bName) {
             return 1;
         } else {
             return 0;

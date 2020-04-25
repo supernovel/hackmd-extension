@@ -1,11 +1,7 @@
 import Vue from 'vue';
-import VueRx from 'vue-rx';
 import Navigator from '@/navigator/Navigator.vue';
 import Drawer from '@/navigator/Drawer.vue';
-
-const TEAM_PATH_REGEXP = /\/team\/([^\/]+)/;
-
-Vue.use(VueRx);
+import { getCurrentTeamName, parseTeamURI } from '@/navigator/util';
 
 const mainView = document.querySelector('#hackmd-app');
 const contentView = document.querySelector('.row.ui-content');
@@ -13,13 +9,33 @@ const container = document.createElement('div');
 const vm = new Vue({
     data() {
         return {
-            team: (TEAM_PATH_REGEXP.exec(location.pathname) || [])[1] || ''
+            team: getCurrentTeamName()
         };
     },
     methods: {
         changeTeam(team) {
             this.team = team;
         }
+    },
+    mounted() {
+        this.$_Root_oldPushState = window.history.pushState;
+        this.$_Root_oldReplaceState = window.history.replaceState;
+
+        window.history.pushState = (...args) => {
+            const [_state, _title, url] = args;
+            this.changeTeam(parseTeamURI(url) || getCurrentTeamName());
+            this.$_Root_oldPushState.call(window.history, ...args);
+        };
+
+        window.history.replaceState = (...args) => {
+            const [_state, _title, url] = args;
+            this.changeTeam(parseTeamURI(url) || getCurrentTeamName());
+            this.$_Root_oldReplaceState.call(window.history, ...args);
+        };
+    },
+    beforeDestroy() {
+        window.history.pushState = this.$_Root_oldPushState;
+        window.history.replaceState = this.$_Root_oldReplaceState;
     },
     render(createElement) {
         return createElement(Drawer, {}, [

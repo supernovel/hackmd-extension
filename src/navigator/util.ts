@@ -1,54 +1,30 @@
-interface FindElementOptions {
-    selector: string;
-    container?: Element;
-    interval?: number;
-    limit?: number;
+const TEAM_PATH_REGEXP = /(?:https?:\/\/hackmd.io)?\/team\/([^\/\?]+).*/;
+const TEAM_HEADER_SELECTORS = [
+    'a.navbar-brand',
+    'a.ui-next-sidenav-workspace-link'
+];
+
+/**
+ * 헤더 엘리먼트들의 링크 속성 및 location.pathname의 문자열을 파싱하여 팀 이름을 가져온다.
+ */
+export function getCurrentTeamName(): string {
+    const uris = TEAM_HEADER_SELECTORS.map(selector => {
+        const header = document.querySelector(selector);
+        return header?.getAttribute('href');
+    }).filter(value => value);
+    let uri = location.pathname;
+
+    if (uris.length) {
+        uri = uris[0];
+    }
+
+    return parseTeamURI(uri) || '';
 }
 
-export function findElement(options: FindElementOptions): Promise<Element> {
-    return new Promise((resolve, reject) => {
-        let count = 1;
-        const limit = options.limit || 10;
-        const interval = options.interval || 1000;
-        const container = options.container || document;
-        const findElementUsingTimer = () => {
-            const finded = container.querySelector(options.selector);
-
-            if (finded) {
-                resolve(finded);
-            } else if (count > limit) {
-                reject(Error('Not found.'));
-            } else {
-                count++;
-                setTimeout(findElementUsingTimer, interval);
-            }
-        };
-
-        findElementUsingTimer();
-    });
-}
-
-export function findElements(
-    options: FindElementOptions
-): Promise<Array<Element>> {
-    return new Promise((resolve, reject) => {
-        let count = 1;
-        const limit = options.limit || 10;
-        const interval = options.interval || 1000;
-        const container = options.container || document;
-        const findElementsUsingTimer = () => {
-            const finded = container.querySelectorAll(options.selector);
-
-            if (finded && finded.length) {
-                resolve([...finded]);
-            } else if (count > limit) {
-                reject(Error('Not found.'));
-            } else {
-                count++;
-                setTimeout(findElementsUsingTimer, interval);
-            }
-        };
-
-        findElementsUsingTimer();
-    });
+/**
+ * 주소에서 팀 이름을 가져옴
+ * @param uri 주소
+ */
+export function parseTeamURI(uri: string): string | undefined {
+    return (TEAM_PATH_REGEXP.exec(uri) || [])[1];
 }
