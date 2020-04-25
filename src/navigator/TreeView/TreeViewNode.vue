@@ -19,6 +19,7 @@ li.tree-view-node(v-if="!isHidden")
 <script lang="ts">
 import Vue from 'vue';
 import FeatherIcon from 'vue-icon/lib/vue-feather.esm'
+import eventBus from './eventBus';
 
 export default Vue.extend({
     name: 'TreeViewNode',
@@ -45,6 +46,20 @@ export default Vue.extend({
         return {
             expanded: false
         };
+    },
+    mounted(){
+        if(this.hasChildren){
+            eventBus.$on('openAll', this.open);
+            eventBus.$on('closeAll', this.close);
+            eventBus.$on(`open.${this.item.id}`, this.open);
+            eventBus.$on(`close.${this.item.id}`, this.open);
+        }
+    },
+    beforeDestroy(){
+        eventBus.$off('openAll', this.open);
+        eventBus.$off('closeAll', this.open);
+        eventBus.$off(`open.${this.item.id}`, this.open);
+        eventBus.$off(`close.${this.item.id}`, this.open);
     },
     computed: {
         hasChildren() {
@@ -77,6 +92,12 @@ export default Vue.extend({
     methods: {
         toggle() {
             this.expanded = !this.expanded;
+        },
+        open(){
+            this.expanded = true;
+        },
+        close(){
+            this.expanded = false;
         }
     },
     watch: {
