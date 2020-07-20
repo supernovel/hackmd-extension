@@ -51,7 +51,7 @@
         "gulp-if": "^3.0.0",
         "gulp-imagemin": "^7.0.0",
         "gulp-zip": "^5.0.1",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "node-sass": "^4.13.1",
         "prettier": "^1.19.1",
         "pug": "^2.0.4",
